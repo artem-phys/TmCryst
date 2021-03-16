@@ -1,0 +1,3 @@
+cmake -DGeant4_DIR=/home/artem/Geant4/geant4.10.07-install /home/artem/Desktop/TmCryst
+
+cmake -DGeant4_DIR=/opt/Geant4.10.7/ /home/kuzmichev/TmCryst
