@@ -15,23 +15,13 @@
 
 
 
-TmCrystPrimaryGeneratorAction::TmCrystPrimaryGeneratorAction(): G4VUserPrimaryGeneratorAction(),
+TmCrystPrimaryGeneratorAction::TmCrystPrimaryGeneratorAction():G4VUserPrimaryGeneratorAction(),
   fParticleGun(0),
   fEnvelopeBox(0)
   {
   //Number of emitted particles
   G4int n_particle = 1;
   fParticleGun  = new G4ParticleGun(n_particle);
-
-  //Set gamma as emitted particle
-  G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-  G4String particleName;
-  G4ParticleDefinition* particle = particleTable->FindParticle(particleName="gamma");
-  fParticleGun->SetParticleDefinition(particle);
-
-  //Set gamma Energy 
-  G4double E = G4UniformRand() * 100 * keV;
-  fParticleGun->SetParticleEnergy(E);
   } 
 
 TmCrystPrimaryGeneratorAction::~TmCrystPrimaryGeneratorAction()
@@ -56,10 +46,50 @@ void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   G4double y_pos = 0*cm;
   G4double z_pos = 0*cm;
 
-  G4double x0 = x_pos+(2*G4UniformRand()-1)*3*cm;
-  G4double y0 = y_pos+(2*G4UniformRand()-1)*3*cm;
-  G4double z0 = z_pos+(2*G4UniformRand()-1)*3*cm;
+  G4double det_size = 10.8 * mm;
+
+  G4double x0 = x_pos+(2*G4UniformRand()-1)*det_size/2;
+  G4double y0 = y_pos+(2*G4UniformRand()-1)*det_size/2;
+  G4double z0 = z_pos+(2*G4UniformRand()-1)*det_size/2;
   fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
+
+  //Set Energy 
+  G4double E = 0 * keV;
+  G4double ionCharge = 0;
+  fParticleGun->SetParticleEnergy(E);
+  fParticleGun->SetParticleCharge(ionCharge);
+
+  //Set ions as emitted particles
+  G4ParticleDefinition* Th232 = G4IonTable::GetIonTable()->GetIon(90,232);
+  G4ParticleDefinition* U = G4IonTable::GetIonTable()->GetIon(92,238);
+  G4ParticleDefinition* Am241 = G4IonTable::GetIonTable()->GetIon(95,241);
+  
+
+  //Ion abundance - data from raw product estimation
+  G4int NTh232 = 1000;
+  G4int NU = 100;
+  G4int NAm241 = 10000;
+  G4int NAllRadioactive = NTh232+NU+NAm241;
+
+  //Random ion definition with respect to ions' abundances
+  G4int random_nucleus = int(NAllRadioactive*G4UniformRand());
+
+  if (random_nucleus < NTh232)
+  {
+    fParticleGun->SetParticleDefinition(Th232);
+  }
+  else
+  {
+    if (random_nucleus < NU)
+    {
+    fParticleGun->SetParticleDefinition(U);
+    }
+    else
+    {
+      fParticleGun->SetParticleDefinition(Am241);
+    }
+  }
+  
 
   //Primary event generation
   fParticleGun->GeneratePrimaryVertex(anEvent);

@@ -10,6 +10,7 @@
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
 #include "G4SystemOfUnits.hh"
+#include "G4HadronicProcessStore.hh"
 #include "Shielding.hh"
 #include "g4root.hh"
 
@@ -20,6 +21,9 @@
 
 int main(int argc,char** argv)
 {
+
+G4HadronicProcessStore * hps = G4HadronicProcessStore::Instance();
+hps->SetVerbose(0);
 
 //Run manager
 G4RunManager* runManager = new G4RunManager;

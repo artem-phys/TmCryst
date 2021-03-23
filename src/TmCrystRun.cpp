@@ -20,8 +20,8 @@
 TmCrystRun::TmCrystRun()
  : G4Run(), 
   DetID(-1),
-  AllEvents(10000000),
-  PrintModulo(100000)
+  AllEvents(10000),
+  PrintModulo(1000)
  
 { }
 

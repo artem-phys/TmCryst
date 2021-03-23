@@ -8,9 +8,10 @@
 #define TmCrystEnergyDeposit_h 1
 
 #include "G4VPrimitiveScorer.hh"
+#include "G4VPrimitivePlotter.hh"
 #include "G4THitsMap.hh"
 
-class TmCrystEnergyDeposit : public G4VPrimitiveScorer
+class TmCrystEnergyDeposit : public G4VPrimitivePlotter
 {
  
  public: // with description
@@ -32,6 +33,7 @@ class TmCrystEnergyDeposit : public G4VPrimitiveScorer
 
   private:
       G4int HCID;
+      G4double global_time;
       G4THitsMap<G4double>* EvtMap;
 };
 #endif
