@@ -4,12 +4,14 @@
 /// \file TmCrystPrimaryGeneratorAction.cpp
 /// \brief Implementation of the TmCrystPrimaryGeneratorAction class
 
+#include <random>
 #include "G4RunManager.hh"
 #include "G4ParticleGun.hh"
 #include "G4IonTable.hh"
 #include "G4ParticleDefinition.hh"
 #include "G4SystemOfUnits.hh"
 #include "Randomize.hh"
+#include "G4DataSet.hh"
 
 #include "TmCrystPrimaryGeneratorAction.hh"
 
@@ -22,6 +24,23 @@ TmCrystPrimaryGeneratorAction::TmCrystPrimaryGeneratorAction():G4VUserPrimaryGen
   //Number of emitted particles
   G4int n_particle = 1;
   fParticleGun  = new G4ParticleGun(n_particle);
+
+  //Load gamma background
+  const int nrolls = 10; // number of experiments
+  const int nstars = 10;   // maximum number of stars to distribute
+  std::default_random_engine generator;
+  std::discrete_distribution<int> distribution {2,2,1,1,2,2,1,1,2,2};
+
+  int p[nrolls]={};
+  for (int i=0; i<nrolls; ++i) {
+    int number = distribution(generator);
+    ++p[number];
+  }
+
+  std::cout << "a discrete_distribution:" << std::endl;
+  for (int i=0; i<10; ++i)
+    std::cout << i << ": " << std::string(p[i]*nstars/nrolls,'*') << std::endl;
+
   } 
 
 TmCrystPrimaryGeneratorAction::~TmCrystPrimaryGeneratorAction()
@@ -31,8 +50,12 @@ TmCrystPrimaryGeneratorAction::~TmCrystPrimaryGeneratorAction()
 
 
 
+
 void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
+  //Background loading
+
+
   //Random-generated direction of isotropic radiation
   G4double theta = acos(2*G4UniformRand()-1);
   G4double phi = G4UniformRand()*2*3.141592653979;

@@ -36,8 +36,9 @@ G4bool TmCrystEnergyDeposit::ProcessHits(G4Step* aStep,G4TouchableHistory*)
   G4int  index = GetIndex(aStep);
   G4double edepwei = edep*wei;
 
+  G4double edeplim = 0.1 * MeV;
   G4double year_time = 3.15e8 * s;
-  G4double detector_response_time = 0.01 * ms;
+  G4double detector_response_time = 0.001 * ms;
 
   G4Track * track = aStep->GetTrack();
   G4double  time = track->GetGlobalTime();
@@ -48,7 +49,12 @@ G4bool TmCrystEnergyDeposit::ProcessHits(G4Step* aStep,G4TouchableHistory*)
   }
   else
   {
-    EvtMap->add(index,edepwei);
+    if (edep < edeplim) 
+    {
+      EvtMap->add(index,edepwei);
+    }
+    
+    
   }
 
   if (time - global_time > detector_response_time ) 
