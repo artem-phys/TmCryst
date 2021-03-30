@@ -22,6 +22,8 @@ class TmCrystPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
   public:
     TmCrystPrimaryGeneratorAction();
     virtual ~TmCrystPrimaryGeneratorAction();
+    void LoadBackgroundGammasEnergyCDF(std::string file);
+    double RandomGammaEnergy();
 
     // Sets the parameters of the source of the initial particles
     virtual void GeneratePrimaries(G4Event*);         
@@ -30,9 +32,13 @@ class TmCrystPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
     const G4ParticleGun* GetParticleGun() const { return fParticleGun; }
   
   private:
+    
+
     G4ParticleGun*  fParticleGun;
     G4Box* fEnvelopeBox;// temp volume variable
     G4IonTable* ionTable;
     G4ParticleDefinition* ion;
+    G4int Egamma[153];
+    G4double CDF[153];
 };
 #endif

@@ -5,6 +5,7 @@
 /// \brief Implementation of the TmCrystPrimaryGeneratorAction class
 
 #include <random>
+#include <fstream>
 #include "G4RunManager.hh"
 #include "G4ParticleGun.hh"
 #include "G4IonTable.hh"
@@ -25,22 +26,7 @@ TmCrystPrimaryGeneratorAction::TmCrystPrimaryGeneratorAction():G4VUserPrimaryGen
   G4int n_particle = 1;
   fParticleGun  = new G4ParticleGun(n_particle);
 
-  //Load gamma background
-  const int nrolls = 10; // number of experiments
-  const int nstars = 10;   // maximum number of stars to distribute
-  std::default_random_engine generator;
-  std::discrete_distribution<int> distribution {2,2,1,1,2,2,1,1,2,2};
-
-  int p[nrolls]={};
-  for (int i=0; i<nrolls; ++i) {
-    int number = distribution(generator);
-    ++p[number];
-  }
-
-  std::cout << "a discrete_distribution:" << std::endl;
-  for (int i=0; i<10; ++i)
-    std::cout << i << ": " << std::string(p[i]*nstars/nrolls,'*') << std::endl;
-
+  LoadBackgroundGammasEnergyCDF("/home/artem/Desktop/TmCryst/fon.txt");
   } 
 
 TmCrystPrimaryGeneratorAction::~TmCrystPrimaryGeneratorAction()
@@ -49,13 +35,49 @@ TmCrystPrimaryGeneratorAction::~TmCrystPrimaryGeneratorAction()
 }
 
 
+void TmCrystPrimaryGeneratorAction::LoadBackgroundGammasEnergyCDF(std::string file)
+{
+  std::ifstream fin;
+  fin.open(file);
+  //Check if opened
+  if (!fin.is_open())
+  {
+    std::cout << "Error opening file " << file  << "\n";
+  }
+  else
+  {
+    std::cout << "Reading background CDF file " << file << "..." << "\n";
+  }
+
+  //Cycle reading file
+  G4int i = 1;
+  do
+  {
+    fin >> Egamma[i] >> CDF[i];
+  } while(fin.eof()==0);
+}
+
+double TmCrystPrimaryGeneratorAction::RandomGammaEnergy()
+{
+  G4double E = 0;
+  G4double F = G4UniformRand();
+    for (int i = 1; i <153; i++)
+    {
+      double lb = CDF[i];
+      double rb = CDF[i+1];
+      if ((F >=lb)&&(F <= rb))
+      {
+        double x = G4UniformRand();
+        E = lb + x * (lb -rb);
+        return E;
+      }
+    }
+}
+
 
 
 void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
-  //Background loading
-
-
   //Random-generated direction of isotropic radiation
   G4double theta = acos(2*G4UniformRand()-1);
   G4double phi = G4UniformRand()*2*3.141592653979;
@@ -75,6 +97,11 @@ void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   G4double y0 = y_pos+(2*G4UniformRand()-1)*det_size/2;
   G4double z0 = z_pos+(2*G4UniformRand()-1)*det_size/2;
   fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
+
+  //Equally likely generate gamma or ion
+  G4double GammaOrIon = G4UniformRand();
+  if (GammaOrIon <= 0.5)
+    {
 
   //Set Energy 
   G4double E = 0 * keV;
@@ -112,6 +139,41 @@ void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
       fParticleGun->SetParticleDefinition(Am241);
     }
   }
+
+    }
+
+    else 
+    {
+  G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
+  G4ParticleDefinition* gammaParticle = particleTable->FindParticle("gamma");
+
+  
+  
+      fParticleGun->SetParticleDefinition(gammaParticle);
+      G4double gammaE = RandomGammaEnergy();
+      fParticleGun->SetParticleEnergy(gammaE);
+
+      
+
+      //Gamma random position outside bolometer
+      G4double chamber_sizeXY = 10*cm;
+      G4double chamber_sizeZ = 20*cm;
+      while ((x0<det_size) || (y0<det_size) || (z0<det_size))
+      {
+        x0 = x_pos+(2*G4UniformRand()-1)*chamber_sizeXY/2;
+        y0 = y_pos+(2*G4UniformRand()-1)*chamber_sizeXY/2;
+        z0 = z_pos+(2*G4UniformRand()-1)*chamber_sizeZ/2;
+      }
+
+      
+      fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
+
+      //G4cout << "gamma E = " << gammaE << "\n";
+      //G4cout << "gamma x0 = " << x0 << "y0 = " << y0 << "z0 = " << z0 << "\n";
+      //G4cout << "gamma x = " << x << "y = " << y << "z = " << z << "\n";
+      
+    }
+
   
 
   //Primary event generation
