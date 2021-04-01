@@ -21,7 +21,7 @@
 
 int main(int argc,char** argv)
 {
-
+//Reduce Physics list verbosity
 G4HadronicProcessStore * hps = G4HadronicProcessStore::Instance();
 hps->SetVerbose(0);
 
@@ -30,10 +30,18 @@ G4RunManager* runManager = new G4RunManager;
 runManager->SetUserInitialization(new TmCrystDetectorConstruction);
 runManager->SetUserInitialization(new Shielding);
 runManager->SetUserInitialization(new TmCrystActionInitialization);
+
+hps->SetVerbose(0);
+
+
+//Initialization
 runManager->Initialize();
+
+hps->SetVerbose(0);
 
 //Visualisation and UI
 G4VisManager* visManager = new G4VisExecutive;
+visManager->SetVerboseLevel(1);
 visManager->Initialize();
 G4UImanager* UImanager = G4UImanager::GetUIpointer();
 

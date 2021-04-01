@@ -50,28 +50,38 @@ void TmCrystPrimaryGeneratorAction::LoadBackgroundGammasEnergyCDF(std::string fi
   }
 
   //Cycle reading file
-  G4int i = 1;
-  do
+  G4int i = 0;
+  while(fin.eof()==0)
   {
     fin >> Egamma[i] >> CDF[i];
-  } while(fin.eof()==0);
+    //G4cout << "Egamma[i] =" << Egamma[i] << " - CDF[i] =" << CDF[i] << "\n";
+    ++i;
+  }
 }
 
 double TmCrystPrimaryGeneratorAction::RandomGammaEnergy()
 {
   G4double E = 0;
   G4double F = G4UniformRand();
-    for (int i = 1; i <153; i++)
+  double lb;
+  double rb;
+    for (int i = 0; i < 152; i++)
     {
-      double lb = CDF[i];
-      double rb = CDF[i+1];
+      
+      lb = CDF[i];
+      rb = CDF[i+1];
+
+      //G4cout << "F =" << F << "\n";
+      //G4cout << "lb =" << lb << " rb =" << rb << "\n";
+      //G4cout << "Egamma[i] =" << Egamma[i] << "Egamma[i + 1] =" << Egamma[i + 1] << "\n";
       if ((F >=lb)&&(F <= rb))
       {
         double x = G4UniformRand();
-        E = lb + x * (lb -rb);
+          E = Egamma[i] + x * (Egamma[i+1] - Egamma[i] );
         return E;
       }
     }
+    return 0.0;
 }
 
 
@@ -150,7 +160,8 @@ void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   
   
       fParticleGun->SetParticleDefinition(gammaParticle);
-      G4double gammaE = RandomGammaEnergy();
+      G4double gammaE = RandomGammaEnergy() * keV;
+      //G4cout << "gammaE = " << gammaE / keV << "keV" << "\n";
       fParticleGun->SetParticleEnergy(gammaE);
 
       

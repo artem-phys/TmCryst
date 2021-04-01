@@ -38,7 +38,7 @@ class TmCrystPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
     G4Box* fEnvelopeBox;// temp volume variable
     G4IonTable* ionTable;
     G4ParticleDefinition* ion;
-    G4int Egamma[153];
-    G4double CDF[153];
+    G4int Egamma[160];
+    G4double CDF[160];
 };
 #endif

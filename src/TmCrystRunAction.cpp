@@ -25,7 +25,11 @@ G4Run* TmCrystRunAction::GenerateRun()
 
 void TmCrystRunAction::BeginOfRunAction(const G4Run* run)
 { 
-  G4cout << "### Run " << run->GetRunID() << " start." << G4endl;
+  G4cout
+    << G4endl
+    << "--------------------Start of Global Run-----------------------"
+    << G4endl;
+
   G4RunManager::GetRunManager()->SetRandomNumberStore(false);
 }
 
@@ -49,6 +53,6 @@ void TmCrystRunAction::EndOfRunAction(const G4Run* run)
      << G4endl
      << "--------------------End of Global Run-----------------------"
      << G4endl
-     << "  The run was " << nofEvents << " events ";
-     
+     << "  The run was " << nofEvents << " events "
+     << G4endl;  
 }

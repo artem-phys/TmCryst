@@ -75,8 +75,7 @@ G4VPhysicalVolume* TmCrystDetectorConstruction::Construct()
   // AIR CHAMBER
   G4double chamber_sizeXY = 10*cm;
   G4double chamber_sizeZ = 20*cm;
-  G4Material* chamber_mat = nist->FindOrBuildMaterial("G4_AIR");
-
+  G4Material* chamber_mat = nist->FindOrBuildMaterial("G4_Galactic");
   G4Box* solidChamber = new G4Box("Chamber", 0.5*chamber_sizeXY, 0.5*chamber_sizeXY, 0.5*chamber_sizeZ);
   G4LogicalVolume* logicChamber = new G4LogicalVolume(solidChamber , chamber_mat, "Chamber");
   new G4PVPlacement(0, G4ThreeVector(), logicChamber, "Chamber", logicCopper, false, 0, checkOverlaps); 
@@ -106,7 +105,7 @@ G4VPhysicalVolume* TmCrystDetectorConstruction::Construct()
   
   // TM CRYSTAL - DETECTOR ACTIVE VOLUME
   // It has a tiny dead layer
-  G4double dead_thickness = 1 * mm;
+  G4double dead_thickness = 0.01 * mm;
   G4double active_size = det_size - dead_thickness;
 
   G4Box* solidDet = new G4Box("Detector", 0.5*active_size, 0.5*active_size, 0.5*active_size);
