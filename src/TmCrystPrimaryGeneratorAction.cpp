@@ -77,7 +77,8 @@ double TmCrystPrimaryGeneratorAction::RandomGammaEnergy()
       if ((F >=lb)&&(F <= rb))
       {
         double x = G4UniformRand();
-          E = Egamma[i] + x * (Egamma[i+1] - Egamma[i] );
+        E = Egamma[i] + x * (Egamma[i+1] - Egamma[i] );
+        //if (lb == 0){G4cout << "E =" << E << "\n";}
         return E;
       }
     }
@@ -184,8 +185,6 @@ void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
       //G4cout << "gamma x = " << x << "y = " << y << "z = " << z << "\n";
       
     }
-
-  
 
   //Primary event generation
   fParticleGun->GeneratePrimaryVertex(anEvent);

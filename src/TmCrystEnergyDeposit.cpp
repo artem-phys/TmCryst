@@ -36,7 +36,7 @@ G4bool TmCrystEnergyDeposit::ProcessHits(G4Step* aStep,G4TouchableHistory*)
   G4int  index = GetIndex(aStep);
   G4double edepwei = edep*wei;
 
-  G4double edeplim = 0.1 * MeV;
+  G4double edeplim = 50 * keV;
   G4double year_time = 3.15e8 * s;
   G4double detector_response_time = 0.001 * ms;
 
