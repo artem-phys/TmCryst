@@ -19,9 +19,9 @@ add_executable(TmCryst TmCryst.cpp ${sources} ${headers})
 target_link_libraries(TmCryst ${Geant4_LIBRARIES})
 
 set(EXAMPLE1_SCRIPTS
-  run.mac
-  vis.mac
+  run_source_0.mac
   )
+  file(COPY run_macros DESTINATION ${PROJECT_BINARY_DIR})
 
 
 foreach(_script ${EXAMPLE1_SCRIPTS})

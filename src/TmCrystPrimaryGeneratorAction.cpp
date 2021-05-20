@@ -4,7 +4,10 @@
 /// \file TmCrystPrimaryGeneratorAction.cpp
 /// \brief Implementation of the TmCrystPrimaryGeneratorAction class
 
-#include <random>
+#include <random> 
+#include <vector>
+#include <algorithm>
+
 #include <fstream>
 #include "G4RunManager.hh"
 #include "G4ParticleGun.hh"
@@ -59,6 +62,7 @@ void TmCrystPrimaryGeneratorAction::LoadBackgroundGammasEnergyCDF(std::string fi
   }
 }
 
+
 double TmCrystPrimaryGeneratorAction::RandomGammaEnergy()
 {
   G4double E = 0;
@@ -110,7 +114,7 @@ void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
 
   //Equally likely generate gamma or ion
-  G4double GammaOrIon = G4UniformRand();
+  G4double GammaOrIon = 0.2 ; //G4UniformRand()
   if (GammaOrIon <= 0.5)
     {
 
@@ -121,35 +125,54 @@ void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   fParticleGun->SetParticleCharge(ionCharge);
 
   //Set ions as emitted particles
-  G4ParticleDefinition* Th232 = G4IonTable::GetIonTable()->GetIon(90,232);
-  G4ParticleDefinition* U = G4IonTable::GetIonTable()->GetIon(92,238);
+  G4ParticleDefinition* Ra228 = G4IonTable::GetIonTable()->GetIon(86,228);
+  G4ParticleDefinition* Th228 = G4IonTable::GetIonTable()->GetIon(90,228);
+  G4ParticleDefinition* Ra226 = G4IonTable::GetIonTable()->GetIon(86,226);
+  G4ParticleDefinition* Pb210 = G4IonTable::GetIonTable()->GetIon(82,210);
+  G4ParticleDefinition* U235 = G4IonTable::GetIonTable()->GetIon(92,235);
+  G4ParticleDefinition* K40 = G4IonTable::GetIonTable()->GetIon(19,40);
+  G4ParticleDefinition* Co60= G4IonTable::GetIonTable()->GetIon(27,60);
   G4ParticleDefinition* Am241 = G4IonTable::GetIonTable()->GetIon(95,241);
+  G4ParticleDefinition* Cs137 = G4IonTable::GetIonTable()->GetIon(55,137);
   
 
-  //Ion abundance - data from raw product estimation
-  G4int NTh232 = 1000;
-  G4int NU = 100;
-  G4int NAm241 = 10000;
-  G4int NAllRadioactive = NTh232+NU+NAm241;
-
   //Random ion definition with respect to ions' abundances
-  G4int random_nucleus = int(NAllRadioactive*G4UniformRand());
 
-  if (random_nucleus < NTh232)
-  {
-    fParticleGun->SetParticleDefinition(Th232);
-  }
-  else
-  {
-    if (random_nucleus < NU)
-    {
-    fParticleGun->SetParticleDefinition(U);
-    }
-    else
-    {
-      fParticleGun->SetParticleDefinition(Am241);
-    }
-  }
+  int nuc = rand() % 9;
+  nuc = 0;
+  switch (nuc)
+	{
+	case 0:
+		fParticleGun->SetParticleDefinition(Ra228);
+		break;
+	case 1:
+		fParticleGun->SetParticleDefinition(Th228);
+		break;
+	case 2:
+		fParticleGun->SetParticleDefinition(Ra226);
+		break;
+	case 3:
+		fParticleGun->SetParticleDefinition(Pb210);
+		break;
+	case 4:
+		fParticleGun->SetParticleDefinition(U235);
+		break;
+  case 5:
+		fParticleGun->SetParticleDefinition(K40);
+		break;
+	case 6:
+		fParticleGun->SetParticleDefinition(Co60);
+		break;
+	case 7:
+		fParticleGun->SetParticleDefinition(Am241);
+		break;
+	case 8:
+		fParticleGun->SetParticleDefinition(Cs137);
+		break;
+	default:
+		std::cout << "Unknown";
+		break;
+	}
 
     }
 

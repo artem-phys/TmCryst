@@ -60,6 +60,20 @@ else
     //Name of required macros to execute was given through command line
     G4String command = "/control/execute ";
     G4String fileName = argv[1];
+
+    //Get required source from the name of a macro file
+    std::string source = fileName;
+    source.erase(source.end()-4, source.end());
+    source.erase(source.begin(), source.begin()+11);
+    std::cout << source << '\n';
+    int S = std::stoi(source);
+
+    //Write score 
+
+    scoreNtupleWriter.SetVerboseLevel(0);
+    const G4String scoring_filename = "TmCrystScoring_source_" + std::to_string(S) + ".root";
+    scoreNtupleWriter.SetFileName(scoring_filename);
+
     UImanager->ApplyCommand(command+fileName);
 }
 

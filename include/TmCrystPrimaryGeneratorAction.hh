@@ -24,6 +24,7 @@ class TmCrystPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
     virtual ~TmCrystPrimaryGeneratorAction();
     void LoadBackgroundGammasEnergyCDF(std::string file);
     double RandomGammaEnergy();
+    long int S;
 
     // Sets the parameters of the source of the initial particles
     virtual void GeneratePrimaries(G4Event*);         
@@ -40,5 +41,7 @@ class TmCrystPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
     G4ParticleDefinition* ion;
     G4int Egamma[160];
     G4double CDF[160];
+    const int n = 9; //radioactive nuclides
+    long int N[9]; //Number of nuclei of radioactive nuclides
 };
 #endif
