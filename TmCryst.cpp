@@ -21,15 +21,29 @@
 
 int main(int argc,char** argv)
 {
+//
+
+//Name of required macros to execute was given through command line
+G4String fileName = argv[1];
+
+//Get required source from the name of a macro file
+std::string source = fileName;
+source.erase(source.end()-4, source.end()); 
+source.erase(source.begin(), source.begin()+18); // applicable only for call ./TmCryst macros/run_source_N.mac  !
+G4int g_source_number = std::stoi(source);
+
+std::string source_names[10] = {"Ra228","Th228","Ra226","Pb210","U235","K40","Co60","Am241","Cs137","Gamma background"};
+std::cout << "Simulating source: "<< source_names[g_source_number] << "... \n";
+
+//Reduce Physics list verbosity
+G4HadronicProcessStore * hps = G4HadronicProcessStore::Instance();
+hps->SetVerbose(0);
+
 //Run manager
 G4RunManager* runManager = new G4RunManager;
 runManager->SetUserInitialization(new TmCrystDetectorConstruction);
 runManager->SetUserInitialization(new Shielding);
 runManager->SetUserInitialization(new TmCrystActionInitialization);
-
-//Reduce Physics list verbosity
-G4HadronicProcessStore * hps = G4HadronicProcessStore::Instance();
-hps->SetVerbose(0);
 
 //Initialization
 runManager->Initialize();
@@ -57,24 +71,12 @@ if ( argc == 1 )
 
 else 
 {
-    //Name of required macros to execute was given through command line
-    G4String command = "/control/execute ";
-    G4String fileName = argv[1];
-
-    //Get required source from the name of a macro file
-    std::string source = fileName;
-    source.erase(source.end()-4, source.end());
-    source.erase(source.begin(), source.begin()+18);
-
-    std::string source_names[10] = {"Ra228","Th228","Ra226","Pb210","U235","K40","Co60","Am241","Cs137","Gamma background"};
-    std::cout << "Simulating source: "<< source_names[std::stoi(source)] << "... \n";
-
     //Write score 
-
     scoreNtupleWriter.SetVerboseLevel(0);
     scoring_filename = "TmCrystScoring_source_" + source + ".root";
     scoreNtupleWriter.SetFileName(scoring_filename);
 
+    G4String command = "/control/execute ";
     UImanager->ApplyCommand(command + fileName);
 }
 

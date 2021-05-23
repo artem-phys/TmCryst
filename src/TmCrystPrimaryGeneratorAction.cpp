@@ -19,18 +19,20 @@
 
 #include "TmCrystPrimaryGeneratorAction.hh"
 
-
+//global variable
+extern G4int g_source_number = 0;
 
 TmCrystPrimaryGeneratorAction::TmCrystPrimaryGeneratorAction():G4VUserPrimaryGeneratorAction(),
-  source(0),
+  source(::g_source_number),
   fParticleGun(0),
   fEnvelopeBox(0)
   {
-  //Number of emitted particles
-  G4int n_particle = 1;
-  fParticleGun  = new G4ParticleGun(n_particle);
 
-  LoadBackgroundGammasEnergyCDF("/home/artem/Desktop/TmCryst/fon.txt");
+    //Number of emitted particles
+    G4int n_particle = 1;
+    fParticleGun  = new G4ParticleGun(n_particle);
+
+    LoadBackgroundGammasEnergyCDF("/home/artem/Desktop/TmCryst/fon.txt");
   } 
 
 TmCrystPrimaryGeneratorAction::~TmCrystPrimaryGeneratorAction()

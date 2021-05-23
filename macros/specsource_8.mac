@@ -1,6 +1,6 @@
 # Macro file for TmCryst
 #
-#source_0 -- 228 Ra
+#source_8 -- 137 Cs
 #
 # Change the default number of workers (in multi-threading mode) 
 #/run/numberOfWorkers 4
@@ -13,5 +13,4 @@
 /event/verbose 0
 /tracking/verbose 0
 
-
-/run/beamOn 59294
+/run/beamOn 98070

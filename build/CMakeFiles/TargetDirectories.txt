@@ -1,8 +1,0 @@
-/home/artem/Desktop/TmCryst/build/CMakeFiles/install/local.dir
-/home/artem/Desktop/TmCryst/build/CMakeFiles/install.dir
-/home/artem/Desktop/TmCryst/build/CMakeFiles/list_install_components.dir
-/home/artem/Desktop/TmCryst/build/CMakeFiles/rebuild_cache.dir
-/home/artem/Desktop/TmCryst/build/CMakeFiles/edit_cache.dir
-/home/artem/Desktop/TmCryst/build/CMakeFiles/ex1.dir
-/home/artem/Desktop/TmCryst/build/CMakeFiles/install/strip.dir
-/home/artem/Desktop/TmCryst/build/CMakeFiles/TmCryst.dir

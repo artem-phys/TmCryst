@@ -17,7 +17,8 @@
 
 TmCrystActionInitialization::TmCrystActionInitialization()
  : G4VUserActionInitialization()
-{}
+{
+}
 
 TmCrystActionInitialization::~TmCrystActionInitialization()
 {}
