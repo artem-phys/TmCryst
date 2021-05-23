@@ -11,7 +11,7 @@
 /control/verbose 0
 /run/verbose 0
 /event/verbose 0
-/tracking/verbose 
+/tracking/verbose 0
 
 
-/run/beamOn 592942
+/run/beamOn 59294

@@ -29,6 +29,7 @@ set(EXAMPLE1_SCRIPTS
   run_source_7.mac
   run_source_8.mac
   )
+  file(COPY macros DESTINATION ${PROJECT_BINARY_DIR})
 
 
 foreach(_script ${EXAMPLE1_SCRIPTS})

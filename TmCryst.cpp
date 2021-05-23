@@ -43,7 +43,7 @@ G4UImanager* UImanager = G4UImanager::GetUIpointer();
 //Write score 
 G4TScoreNtupleWriter<G4AnalysisManager> scoreNtupleWriter;
 scoreNtupleWriter.SetVerboseLevel(0);
-const G4String scoring_filename = "TmCrystScoring.root";
+G4String scoring_filename = "TmCrystScoring.root";
 scoreNtupleWriter.SetFileName(scoring_filename);
 
 if ( argc == 1 ) 
@@ -64,17 +64,18 @@ else
     //Get required source from the name of a macro file
     std::string source = fileName;
     source.erase(source.end()-4, source.end());
-    source.erase(source.begin(), source.begin()+11);
-    std::cout << source << '\n';
-    int S = std::stoi(source);
+    source.erase(source.begin(), source.begin()+18);
+
+    std::string source_names[10] = {"Ra228","Th228","Ra226","Pb210","U235","K40","Co60","Am241","Cs137","Gamma background"};
+    std::cout << "Simulating source: "<< source_names[std::stoi(source)] << "... \n";
 
     //Write score 
 
     scoreNtupleWriter.SetVerboseLevel(0);
-    const G4String scoring_filename = "TmCrystScoring_source_" + std::to_string(S) + ".root";
+    scoring_filename = "TmCrystScoring_source_" + source + ".root";
     scoreNtupleWriter.SetFileName(scoring_filename);
 
-    UImanager->ApplyCommand(command+fileName);
+    UImanager->ApplyCommand(command + fileName);
 }
 
 delete runManager;

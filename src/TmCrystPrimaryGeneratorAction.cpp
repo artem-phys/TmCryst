@@ -22,6 +22,7 @@
 
 
 TmCrystPrimaryGeneratorAction::TmCrystPrimaryGeneratorAction():G4VUserPrimaryGeneratorAction(),
+  source(0),
   fParticleGun(0),
   fEnvelopeBox(0)
   {
@@ -113,9 +114,8 @@ void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   G4double z0 = z_pos+(2*G4UniformRand()-1)*det_size/2;
   fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
 
-  //Equally likely generate gamma or ion
-  G4double GammaOrIon = 0.2 ; //G4UniformRand()
-  if (GammaOrIon <= 0.5)
+  
+  if (source !=9) //source 0..8 - ions
     {
 
   //Set Energy 
@@ -138,9 +138,7 @@ void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
   //Random ion definition with respect to ions' abundances
 
-  int nuc = rand() % 9;
-  nuc = 0;
-  switch (nuc)
+  switch (source)
 	{
 	case 0:
 		fParticleGun->SetParticleDefinition(Ra228);
@@ -176,10 +174,12 @@ void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
     }
 
+
     else 
     {
-  G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-  G4ParticleDefinition* gammaParticle = particleTable->FindParticle("gamma");
+      //source 9: gamma
+      G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
+      G4ParticleDefinition* gammaParticle = particleTable->FindParticle("gamma");
 
   
   

@@ -25,6 +25,7 @@ class TmCrystPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
     void LoadBackgroundGammasEnergyCDF(std::string file);
     double RandomGammaEnergy();
     long int S;
+    int source;
 
     // Sets the parameters of the source of the initial particles
     virtual void GeneratePrimaries(G4Event*);         

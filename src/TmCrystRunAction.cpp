@@ -28,6 +28,12 @@ void TmCrystRunAction::BeginOfRunAction(const G4Run* run)
   G4cout
     << G4endl
     << "--------------------Start of Global Run-----------------------"
+    << G4endl
+    << "RunID: "
+    << run->GetRunID()
+    << G4endl
+    << "Number of events to be processed: "
+    << run->GetNumberOfEventToBeProcessed()
     << G4endl;
 
   G4RunManager::GetRunManager()->SetRandomNumberStore(false);

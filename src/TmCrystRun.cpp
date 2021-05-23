@@ -39,7 +39,7 @@ void TmCrystRun::RecordEvent(const G4Event* event)
   //Progress bar
   if (evtNb%PrintModulo == 0) 
   { 
-    G4cout << G4endl << "Progress " << evtNb << "/" << AllEvents << G4endl;
+    G4cout << G4endl << "Progress " << evtNb << " events" << G4endl;
   }      
   
   //Hits collections
