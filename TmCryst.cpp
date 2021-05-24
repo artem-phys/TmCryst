@@ -28,6 +28,7 @@ G4String fileName = argv[1];
 
 //Get required source from the name of a macro file
 std::string source = fileName;
+std::string simulation_type = source.substr(7, 12);
 source.erase(source.end()-4, source.end()); 
 source.erase(source.begin(), source.begin()+18); // applicable only for call ./TmCryst macros/run_source_N.mac  !
 G4int g_source_number = std::stoi(source);
@@ -73,7 +74,7 @@ else
 {
     //Write score 
     scoreNtupleWriter.SetVerboseLevel(0);
-    scoring_filename = "TmCrystScoring_source_" + fileName.erase(fileName.begin(), fileName.begin()+7) + ".root";
+    scoring_filename = "TmCrystScoring_" + simulation_type + ".root";
     scoreNtupleWriter.SetFileName(scoring_filename);
 
     G4String command = "/control/execute ";
