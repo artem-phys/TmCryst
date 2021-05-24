@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Call this script via:    nohup ./DST_massive_submitter.pl process.sh &
+# Call this script via:    nohup ./submitter.sh sim.sh &>log.log&
 # 
 # This script checks the number of reprocess jobs pending/running;
 # If the number of jobs  under a certain threshold, a new process is submitted.

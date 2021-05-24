@@ -1,20 +1,20 @@
-nohup ./TmCryst macros/run_source_0.mac &>test0.log &
-nohup ./TmCryst macros/specsource_0.mac &>spectest0.log &
-nohup ./TmCryst macros/run_source_1.mac &>test1.log &
-nohup ./TmCryst macros/specsource_1.mac &>spectest1.log &
-nohup ./TmCryst macros/run_source_2.mac &>test2.log &
-nohup ./TmCryst macros/specsource_2.mac &>spectest2.log &
-nohup ./TmCryst macros/run_source_3.mac &>test3.log &
-nohup ./TmCryst macros/specsource_3.mac &>spectest3.log &
-nohup ./TmCryst macros/run_source_4.mac &>test4.log &
-nohup ./TmCryst macros/specsource_4.mac &>spectest4.log &
-nohup ./TmCryst macros/run_source_5.mac &>test5.log &
-nohup ./TmCryst macros/specsource_5.mac &>spectest5.log &
-nohup ./TmCryst macros/run_source_6.mac &>test6.log &
-nohup ./TmCryst macros/specsource_6.mac &>spectest6.log &
-nohup ./TmCryst macros/run_source_7.mac &>test7.log &
-nohup ./TmCryst macros/specsource_7.mac &>spectest7.log &
-nohup ./TmCryst macros/run_source_8.mac &>test8.log &
-nohup ./TmCryst macros/specsource_8.mac &>spectest8.log &
-nohup ./TmCryst macros/run_source_9.mac &>test9.log &
-nohup ./TmCryst macros/specsource_9.mac &>spectest9.log &
+nohup ./TmCryst macros/run_source_0.mac &
+nohup ./TmCryst macros/specsource_0.mac &
+nohup ./TmCryst macros/run_source_1.mac &
+nohup ./TmCryst macros/specsource_1.mac &
+nohup ./TmCryst macros/run_source_2.mac &
+nohup ./TmCryst macros/specsource_2.mac &
+nohup ./TmCryst macros/run_source_3.mac &
+nohup ./TmCryst macros/specsource_3.mac &
+nohup ./TmCryst macros/run_source_4.mac &
+nohup ./TmCryst macros/specsource_4.mac &
+nohup ./TmCryst macros/run_source_5.mac &
+nohup ./TmCryst macros/specsource_5.mac &
+nohup ./TmCryst macros/run_source_6.mac &
+nohup ./TmCryst macros/specsource_6.mac &
+nohup ./TmCryst macros/run_source_7.mac &
+nohup ./TmCryst macros/specsource_7.mac &
+nohup ./TmCryst macros/run_source_8.mac &
+nohup ./TmCryst macros/specsource_8.mac &
+nohup ./TmCryst macros/run_source_9.mac &
+nohup ./TmCryst macros/specsource_9.mac &

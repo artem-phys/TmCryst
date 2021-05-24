@@ -73,7 +73,7 @@ else
 {
     //Write score 
     scoreNtupleWriter.SetVerboseLevel(0);
-    scoring_filename = "TmCrystScoring_source_" + source + ".root";
+    scoring_filename = "TmCrystScoring_source_" + fileName.erase(fileName.begin(), fileName.begin()+7) + ".root";
     scoreNtupleWriter.SetFileName(scoring_filename);
 
     G4String command = "/control/execute ";
