@@ -32,7 +32,8 @@ TmCrystPrimaryGeneratorAction::TmCrystPrimaryGeneratorAction():G4VUserPrimaryGen
     G4int n_particle = 1;
     fParticleGun  = new G4ParticleGun(n_particle);
 
-    LoadBackgroundGammasEnergyCDF("/home/artem/Desktop/TmCryst/fon.txt");
+    //LoadBackgroundGammasEnergyCDF("/home/artem/Desktop/TmCryst/fon.txt");
+    LoadBackgroundGammasEnergyCDF("/home/kuzmichev/TmCryst/fon.txt");
   } 
 
 TmCrystPrimaryGeneratorAction::~TmCrystPrimaryGeneratorAction()
