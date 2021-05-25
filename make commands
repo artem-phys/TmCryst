@@ -1,3 +1,13 @@
 cmake -DGeant4_DIR=/home/artem/Geant4/geant4.10.07-install /home/artem/Desktop/TmCryst
 
+
+
+rm -rf TmCryst TmCryst-build/
+git clone https://github.com/artem-phys/TmCryst.git
+mkdir TmCryst-build && cd $_
 cmake -DGeant4_DIR=/opt/Geant4.10.7/ /home/kuzmichev/TmCryst
+make -j64
+chmod +x sim.sh
+chmod +x submitter.sh
+
+nohup ./submitter.sh sim.sh &>log.log&
