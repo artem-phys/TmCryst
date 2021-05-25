@@ -12,6 +12,9 @@
 
 #include "TmCrystEnergyDeposit.hh"
 
+//global variable
+extern G4int g_source_number;
+
 TmCrystEnergyDeposit::TmCrystEnergyDeposit(G4String name, G4int depth)
   :G4VPrimitivePlotter(name,depth),HCID(-1),EvtMap(0)
 {
@@ -43,7 +46,11 @@ G4bool TmCrystEnergyDeposit::ProcessHits(G4Step* aStep,G4TouchableHistory*)
   G4Track * track = aStep->GetTrack();
   G4double  time = track->GetGlobalTime();
 
-  if (time > year_time ) 
+  // Multipliers for hists depending on the number of simulated events and the abundance of nuclei in sample
+  G4double mult_for_kill[10] = {1,1e1,1e4,1e3,1e5,1e9,1,1e1,1e2,1};
+  G4double kill_time = year_time * mult_for_kill[g_source_number];
+
+  if (time > kill_time ) 
   {
     track->SetTrackStatus(fStopAndKill);
   }

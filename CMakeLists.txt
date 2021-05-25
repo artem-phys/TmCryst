@@ -20,9 +20,9 @@ target_link_libraries(TmCryst ${Geant4_LIBRARIES})
 
 set(EXAMPLE1_SCRIPTS
   sim.sh
-  simgen.sh 
   submitter.sh 
   wunderwaffe.cfg
+  TmCryst_draw_scoring.cpp
   )
   file(COPY macros DESTINATION ${PROJECT_BINARY_DIR})
 

@@ -1,13 +1,3 @@
 .vscode/settings.json
 .vscode/c_cpp_properties.json
-OldScoring/TmCrystScoring_source_0.root
-OldScoring/TmCrystScoring_source_1.root
-OldScoring/TmCrystScoring_source_3.root
-OldScoring/TmCrystScoring_source_5.root
-OldScoring/TmCrystScoring_source_7.root
-.gitignore
-OldScoring/TmCrystScoring_source_4.root
-OldScoring/TmCrystScoring_source_2.root
-OldScoring/TmCrystScoring_source_6.root
-OldScoring/TmCrystScoring_source_8.root
-OldScoring/TmCrystScoring_source_9.root
+build/
