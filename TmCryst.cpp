@@ -18,6 +18,8 @@
 #include "TmCrystActionInitialization.hh"
 #include "TmCrystPrimaryGeneratorAction.hh"
 
+//global variable
+extern G4int g_source_number;
 
 int main(int argc,char** argv)
 {
@@ -31,7 +33,7 @@ std::string source = fileName;
 std::string simulation_type = source.substr(7, 12);
 source.erase(source.end()-4, source.end()); 
 source.erase(source.begin(), source.begin()+18); // applicable only for call ./TmCryst macros/run_source_N.mac  !
-G4int g_source_number = std::stoi(source);
+g_source_number = std::stoi(source);
 
 std::string source_names[10] = {"Ra228","Th228","Ra226","Pb210","U235","K40","Co60","Am241","Cs137","Gamma background"};
 std::cout << "Simulating source: "<< source_names[g_source_number] << "... \n";

@@ -20,20 +20,21 @@
 #include "TmCrystPrimaryGeneratorAction.hh"
 
 //global variable
-extern G4int g_source_number = 0;
+G4int g_source_number;
 
 TmCrystPrimaryGeneratorAction::TmCrystPrimaryGeneratorAction():G4VUserPrimaryGeneratorAction(),
   source(::g_source_number),
   fParticleGun(0),
   fEnvelopeBox(0)
   {
+    std::cout << "Simulating source: "<< source << "... \n";
 
     //Number of emitted particles
     G4int n_particle = 1;
     fParticleGun  = new G4ParticleGun(n_particle);
 
-    //LoadBackgroundGammasEnergyCDF("/home/artem/Desktop/TmCryst/fon.txt");
-    LoadBackgroundGammasEnergyCDF("/home/kuzmichev/TmCryst/fon.txt");
+    LoadBackgroundGammasEnergyCDF("/home/artem/Desktop/TmCryst/fon.txt");
+    //LoadBackgroundGammasEnergyCDF("/home/kuzmichev/TmCryst/fon.txt");
   } 
 
 TmCrystPrimaryGeneratorAction::~TmCrystPrimaryGeneratorAction()
