@@ -23,7 +23,10 @@ extern G4int g_source_number;
 
 int main(int argc,char** argv)
 {
-//
+//Random seeds
+G4long seed = time(NULL);
+CLHEP::HepRandom::setTheSeed(seed); 
+G4Random::setTheSeed(seed);
 
 //Name of required macros to execute was given through command line
 G4String fileName = argv[1];
