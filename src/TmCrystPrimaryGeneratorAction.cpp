@@ -64,6 +64,7 @@ void TmCrystPrimaryGeneratorAction::LoadBackgroundGammasEnergyCDF(std::string fi
       ++i;
     }
   }
+}
 
 //Generate random gamma energy using loaded distribution
 double TmCrystPrimaryGeneratorAction::RandomGammaEnergy()
@@ -94,7 +95,7 @@ void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
   //Random-generated direction of isotropic radiation
   G4double theta = acos(2*G4UniformRand()-1);
-  G4double phi = G4UniformRand()*twopi;
+  G4double phi = G4UniformRand()*CLHEP::twopi;
   G4double x = sin(theta)*cos(phi);
   G4double y = sin(theta)*sin(phi);
   G4double z = cos(theta);

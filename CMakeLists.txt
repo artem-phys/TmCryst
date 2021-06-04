@@ -22,7 +22,6 @@ set(EXAMPLE1_SCRIPTS
   sim.sh
   submitter.sh 
   wunderwaffe.cfg
-  TmCryst_draw_scoring.cpp
   )
   file(COPY macros DESTINATION ${PROJECT_BINARY_DIR})
 
