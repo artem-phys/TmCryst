@@ -105,7 +105,7 @@ G4VPhysicalVolume* TmCrystDetectorConstruction::Construct()
   
   // TM CRYSTAL - DETECTOR ACTIVE VOLUME
   // It has a tiny dead layer
-  G4double dead_thickness = 0.001 * mm;
+  G4double dead_thickness = 0.01 * mm;
   G4double active_size = det_size - dead_thickness;
 
   G4Box* solidDet = new G4Box("Detector", 0.5*active_size, 0.5*active_size, 0.5*active_size);

@@ -80,14 +80,10 @@ double TmCrystPrimaryGeneratorAction::RandomGammaEnergy()
       lb = CDF[i];
       rb = CDF[i+1];
 
-      //G4cout << "F =" << F << "\n";
-      //G4cout << "lb =" << lb << " rb =" << rb << "\n";
-      //G4cout << "Egamma[i] =" << Egamma[i] << "Egamma[i + 1] =" << Egamma[i + 1] << "\n";
       if ((F >=lb)&&(F <= rb))
       {
         double x = G4UniformRand();
         E = Egamma[i] + x * (Egamma[i+1] - Egamma[i] );
-        //if (lb == 0){G4cout << "E =" << E << "\n";}
         return E;
       }
     }
@@ -100,7 +96,7 @@ void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
   //Random-generated direction of isotropic radiation
   G4double theta = acos(2*G4UniformRand()-1);
-  G4double phi = G4UniformRand()*2*3.141592653979;
+  G4double phi = G4UniformRand()*twopi;
   G4double x = sin(theta)*cos(phi);
   G4double y = sin(theta)*sin(phi);
   G4double z = cos(theta);
@@ -192,8 +188,6 @@ void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
       //G4cout << "gammaE = " << gammaE / keV << "keV" << "\n";
       fParticleGun->SetParticleEnergy(gammaE);
 
-      
-
       //Gamma random position outside bolometer
       G4double chamber_sizeXY = 10*cm;
       G4double chamber_sizeZ = 20*cm;
@@ -203,14 +197,7 @@ void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
         y0 = y_pos+(2*G4UniformRand()-1)*chamber_sizeXY/2;
         z0 = z_pos+(2*G4UniformRand()-1)*chamber_sizeZ/2;
       }
-
-      
       fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
-
-      //G4cout << "gamma E = " << gammaE << "\n";
-      //G4cout << "gamma x0 = " << x0 << "y0 = " << y0 << "z0 = " << z0 << "\n";
-      //G4cout << "gamma x = " << x << "y = " << y << "z = " << z << "\n";
-      
     }
 
   //Primary event generation
