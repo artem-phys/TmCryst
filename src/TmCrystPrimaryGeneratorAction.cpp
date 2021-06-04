@@ -33,8 +33,10 @@ TmCrystPrimaryGeneratorAction::TmCrystPrimaryGeneratorAction():G4VUserPrimaryGen
     G4int n_particle = 1;
     fParticleGun  = new G4ParticleGun(n_particle);
 
+    //Tries to load file from two sources, in order to be easily performed 
+    //both at Threadripper remote machine and local machine
     LoadBackgroundGammasEnergyCDF("/home/artem/Desktop/TmCryst/fon.txt");
-    //LoadBackgroundGammasEnergyCDF("/home/kuzmichev/TmCryst/fon.txt");
+    LoadBackgroundGammasEnergyCDF("/home/kuzmichev/TmCryst/fon.txt");
   } 
 
 TmCrystPrimaryGeneratorAction::~TmCrystPrimaryGeneratorAction()
@@ -42,7 +44,7 @@ TmCrystPrimaryGeneratorAction::~TmCrystPrimaryGeneratorAction()
   delete fParticleGun;
 }
 
-
+//File fon.txt contains cummulative density function of the distribution of background gammas by energy . 
 void TmCrystPrimaryGeneratorAction::LoadBackgroundGammasEnergyCDF(std::string file)
 {
   std::ifstream fin;
@@ -50,24 +52,20 @@ void TmCrystPrimaryGeneratorAction::LoadBackgroundGammasEnergyCDF(std::string fi
   //Check if opened
   if (!fin.is_open())
   {
-    std::cout << "Error opening file " << file  << "\n";
+    std::cout << "File " << file << "does not exist"  << "\n";
   }
   else
   {
     std::cout << "Reading background CDF file " << file << "..." << "\n";
+    G4int i = 0;
+    while(fin.eof()==0)
+    {
+      fin >> Egamma[i] >> CDF[i];
+      ++i;
+    }
   }
 
-  //Cycle reading file
-  G4int i = 0;
-  while(fin.eof()==0)
-  {
-    fin >> Egamma[i] >> CDF[i];
-    //G4cout << "Egamma[i] =" << Egamma[i] << " - CDF[i] =" << CDF[i] << "\n";
-    ++i;
-  }
-}
-
-
+//Generate random gamma energy using loaded distribution
 double TmCrystPrimaryGeneratorAction::RandomGammaEnergy()
 {
   G4double E = 0;
