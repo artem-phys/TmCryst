@@ -14,4 +14,4 @@
 /tracking/verbose 0
 
 
-/run/beamOn 2.048e+7
+/run/beamOn 20480000
