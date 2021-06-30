@@ -99,7 +99,7 @@ G4VPhysicalVolume* TmCrystDetectorConstruction::Construct()
 
   // TM CRYSTAL
 
-  G4double det_mass = 1 kg; // CRYSTAL 1 KG (small 8.18g before)
+  G4double det_mass = 1.0 * kg; // CRYSTAL 1 KG (small 8.18g before)
 
   G4double det_volume = det_mass / density;
 
