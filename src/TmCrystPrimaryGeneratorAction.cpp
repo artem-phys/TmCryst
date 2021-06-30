@@ -106,7 +106,13 @@ void TmCrystPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   G4double y_pos = 0*cm;
   G4double z_pos = 0*cm;
 
-  G4double det_size = 10.8 * mm;
+  //code from Detector construction
+
+  G4double det_mass = 1 kg; // CRYSTAL 1 KG (small 8.18g before)
+
+  G4double det_volume = det_mass / density;
+
+  G4double det_size = pow(det_volume, 1.0 / 3);
 
   G4double x0 = x_pos+(2*G4UniformRand()-1)*det_size/2;
   G4double y0 = y_pos+(2*G4UniformRand()-1)*det_size/2;

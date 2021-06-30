@@ -47,7 +47,7 @@ G4bool TmCrystEnergyDeposit::ProcessHits(G4Step* aStep,G4TouchableHistory*)
   G4double  time = track->GetGlobalTime();
 
   // Multipliers for hists depending on the number of simulated events and the abundance of nuclei in sample
-  G4double mult_for_kill[10] = {1,1e1,1e4,1e3,1e5,1e9,1,1e1,1e2,1};
+  G4double mult_for_kill[10] = {1,1,1e3,1e2,1e8,1e9,1,1e2,1e2,1};
   G4double kill_time = year_time * mult_for_kill[g_source_number];
 
   if (time > kill_time)

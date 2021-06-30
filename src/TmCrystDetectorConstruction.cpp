@@ -4,6 +4,8 @@
 /// \file TmCrystDetectorConstruction.cpp
 /// \brief Implementation of the TmCrystDetectorConstruction class
 
+#include<cmath>
+
 #include "G4NistManager.hh"
 #include "G4Box.hh"
 #include "G4LogicalVolume.hh"
@@ -96,13 +98,20 @@ G4VPhysicalVolume* TmCrystDetectorConstruction::Construct()
   Tm3Al5O12->AddElement(elO,12);
 
   // TM CRYSTAL
-  G4double det_size = 10.8 * mm;
-  G4Material* det_mat = Tm3Al5O12;                    
+
+  G4double det_mass = 1 kg; // CRYSTAL 1 KG (small 8.18g before)
+
+  G4double det_volume = det_mass / density;
+
+  G4double det_size = pow(det_volume, 1.0 / 3);
+
+  
+  G4Material* det_mat = Tm3Al5O12;
   G4Box* solidTm = new G4Box("TmCrystal", 0.5*det_size, 0.5*det_size, 0.5*det_size);
   G4LogicalVolume* logicTm = new G4LogicalVolume(solidTm, det_mat, "TmCrystal");
   new G4PVPlacement(0, G4ThreeVector(), logicTm, "TmCrystal", logicChamber, false, 0, checkOverlaps);
 
-  
+
   // TM CRYSTAL - DETECTOR ACTIVE VOLUME
   // It has a tiny dead layer
   G4double dead_thickness = 0.01 * mm;
